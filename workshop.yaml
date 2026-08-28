@@ -1,0 +1,9 @@
+id: claude-code-101
+title: "Claude Code 101"
+description: "Your first hands-on session with Claude Code: meet your environment, have your first conversation, and teach Claude your rules."
+version: 1
+estMinutes: 45
+tasks:
+  - 01-meet-your-environment
+  - 02-your-first-prompt
+  - 03-teach-claude-your-rules
