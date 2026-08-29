@@ -9,17 +9,20 @@ trust. In this task you'll try both.
 At the Claude prompt, press **Shift+Tab** to switch permission modes. Watch the
 indicator above the prompt change as you cycle through them:
 
-1. **Manual.** Claude asks before running commands or editing files. This is the mode
-   your session starts in here.
-2. **Accept edits.** File edits are approved automatically, commands still ask.
-3. **Plan mode.** Claude only reads and researches, then presents a plan for approval.
+- **Manual.** Claude asks before running commands or editing files. This is the mode
+  your session starts in here.
+- **Auto.** Claude works without asking for each step. A safety classifier reviews
+  every action and stops the risky ones. You'll set it up in step 3.
+- **Accept edits.** File edits are approved automatically, commands still ask.
+- **Plan mode.** Claude only reads and researches, then presents a plan for approval.
 
 Cycle back to **Manual** when you've seen them all.
 
 :::note[Which mode should you use?]
 Manual is the right home base while you're learning. Plan mode is great for letting
-Claude explore a question safely, and accept edits suits work where you review changes
-in git afterwards instead of one at a time.
+Claude explore a question safely, accept edits suits work where you review changes in
+git afterwards instead of one at a time, and auto is the mode most day-to-day work
+happens in once you trust its guardrails.
 :::
 
 ## 2 · Configure a persistent permission
