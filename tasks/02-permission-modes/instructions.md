@@ -68,8 +68,12 @@ It needs no setup and starts with conservative built-in rules, but you can read 
 extend those rules yourself:
 
 1. **Open the rules.** Run `/permissions` again and select the **Auto mode** tab.
-2. **Add an allow rule of your own.** Auto mode rules are plain sentences, not
-   patterns. Add this one:
+   The built-in rules come in three types: **Soft allow** (fine to do without
+   asking), **Soft deny** (stop and check with you first), and **Hard deny** (never
+   do it). The **Environment** entry is a plain-language description of your setup
+   that gives the classifier context.
+2. **Add a Soft allow rule of your own.** Choose **Add a new rule** and save this
+   sentence as a **Soft allow**. Auto mode rules are plain sentences, not patterns:
 
 ```
 Running the date command is always safe
