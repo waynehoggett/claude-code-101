@@ -33,7 +33,7 @@ Describe "Permissions and auto mode" {
         # The Auto mode tab in /permissions saves classifier rules to settings.json
         # under the autoMode key.
         if ($null -eq $settings.autoMode) {
-            throw "No auto mode rules of your own were found yet. Run /permissions, open the Auto mode tab, and add the allow rule from the instructions."
+            throw "No auto mode rules of your own were found yet. Run /permissions, open the Auto mode tab, and add the Soft allow rule from the instructions."
         }
     }
 }
