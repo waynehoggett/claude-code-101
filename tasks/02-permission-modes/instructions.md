@@ -28,33 +28,36 @@ happens in once you trust its guardrails.
 ## 2 · Configure a persistent permission
 
 Modes are per session. For permissions that stick, Claude Code keeps allow, ask, and
-deny rules in its settings. Open the permission rules screen:
+deny rules in its settings. The most common rule of all is a deny rule that keeps
+Claude away from secrets. Open the permission rules screen:
 
 ```
 /permissions
 ```
 
-Add a new **allow** rule in your **User settings** with this exact rule text, which
-pre-approves running the harmless `date` command:
+Add a new **deny** rule in your **User settings** with this exact rule text, which
+stops Claude reading `.env` files:
 
 ```
-Bash(date:*)
+Read(./.env*)
 ```
+
+:::tip[Reading the rule]
+The trailing `*` is doing the work: `Read(./.env*)` covers `.env` itself and every
+variant like `.env.local` or `.env.production`. Allow rules use the same shape for
+the opposite purpose, for example `Bash(npm run test:*)` pre-approves running your
+test suite without asking.
+:::
 
 :::tip[Choosing a scope]
 When you add a rule, Claude Code asks where to save it:
 
 - **User settings** apply to you in every project on this machine. Use them for
-  tools you always trust, like the `date` rule here.
+  rules you want everywhere, like protecting secrets here.
 - **Project settings** live in the repo and are shared with everyone who works on
   it. Use them for rules the whole team agrees on, like running the test suite.
 - **Local settings** stay in the project but out of git, so they apply only to you,
   only here. Use them for personal exceptions you don't want to share.
-:::
-
-:::tip[Reading the rule]
-`Bash(date:*)` means the Bash tool may run `date` with any arguments, without asking.
-The same shape works for anything you trust, for example `Bash(npm run test:*)`.
 :::
 
 ## 3 · Explore auto mode

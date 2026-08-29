@@ -4,9 +4,9 @@ Describe "Permissions and auto mode" {
             if (Test-Path $path) { Get-Content $path -Raw | ConvertFrom-Json } else { $null }
         }
 
-        # Permission rules can land in user settings, project settings, or the
-        # legacy per-project allowedTools list depending on the scope chosen.
-        $script:allowRules = @()
+        # Rules can land in user, project, or local settings depending on the
+        # scope chosen in /permissions, so search all three.
+        $script:denyRules = @()
 
         foreach ($file in @(
             "$env:CW_CLAUDE_HOME/settings.json",
@@ -14,25 +14,18 @@ Describe "Permissions and auto mode" {
             "$env:CW_WORKSPACE/.claude/settings.local.json"
         )) {
             $cfg = Read-JsonFile $file
-            if ($cfg.permissions.allow) { $script:allowRules += @($cfg.permissions.allow) }
-        }
-
-        $script:state = Read-JsonFile "$env:CW_CLAUDE_HOME/.claude.json"
-        if ($state.projects) {
-            foreach ($proj in $state.projects.PSObject.Properties.Value) {
-                if ($proj.allowedTools) { $script:allowRules += @($proj.allowedTools) }
-            }
+            if ($cfg.permissions.deny) { $script:denyRules += @($cfg.permissions.deny) }
         }
 
         $script:settings = Read-JsonFile "$env:CW_CLAUDE_HOME/settings.json"
     }
 
-    It "An allow rule for the date command is saved in your permissions" {
-        if ($allowRules.Count -eq 0) {
-            throw "No saved permission rules were found yet. Inside Claude Code, run /permissions and add an allow rule."
+    It "A deny rule protecting .env files is saved in your permissions" {
+        if ($denyRules.Count -eq 0) {
+            throw "No saved deny rules were found yet. Inside Claude Code, run /permissions and add a deny rule."
         }
-        if (@($allowRules -match '^Bash\(date').Count -eq 0) {
-            throw "Your saved rules don't include the date rule yet. In /permissions, add an allow rule with the exact text Bash(date:*) to your User settings."
+        if (@($denyRules -match '\.env').Count -eq 0) {
+            throw "Your deny rules don't cover .env files yet. In /permissions, add a deny rule with the exact text Read(./.env*) to your User settings."
         }
     }
 
