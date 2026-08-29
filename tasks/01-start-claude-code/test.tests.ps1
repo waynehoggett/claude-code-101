@@ -24,21 +24,31 @@ Describe "Claude Code is set up" {
     }
 
     It "You started Claude Code and trusted your workspace folder" {
-        $state | Should -Not -BeNullOrEmpty -Because "run claude in your terminal to start Claude Code for the first time"
+        if ($null -eq $state) {
+            throw "Claude Code doesn't seem to have started yet. Run claude in your terminal and work through the setup questions, then check again."
+        }
         $trusted = @()
         if ($state.projects) {
             $trusted = @($state.projects.PSObject.Properties.Value |
                 Where-Object { $_.hasTrustDialogAccepted -eq $true })
         }
-        $trusted.Count | Should -BeGreaterThan 0 -Because "when Claude Code asks whether you trust the files in this folder, choose Yes, proceed"
+        if ($trusted.Count -eq 0) {
+            throw "Claude Code has started, but your workspace folder isn't trusted yet. When Claude Code asks whether you trust the files in this folder, choose Yes, proceed."
+        }
     }
 
     It "The active model is Sonnet" {
-        $models.Count | Should -BeGreaterThan 0 -Because "run /model inside Claude Code and pick a model with the arrow keys"
-        ($models -match 'sonnet').Count | Should -BeGreaterThan 0 -Because "run /model and select Sonnet as the model"
+        if ($models.Count -eq 0) {
+            throw "No model has been picked yet. Inside Claude Code, run /model and select Sonnet."
+        }
+        if (@($models -match 'sonnet').Count -eq 0) {
+            throw "The selected model isn't Sonnet yet. Run /model and select Sonnet as the model."
+        }
     }
 
     It "Reasoning effort is set to Medium" {
-        ($efforts -contains 'medium') | Should -BeTrue -Because "run /model and set the effort to Medium"
+        if ($efforts -notcontains 'medium') {
+            throw "Reasoning effort isn't set to Medium yet. Run /model and set the effort to Medium."
+        }
     }
 }

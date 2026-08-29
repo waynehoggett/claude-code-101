@@ -26,8 +26,12 @@ source of grading truth). The full platform contract lives in the platform repo 
 
 - `It` names are shown verbatim as the learner's checklist. Write them as polished
   sentences ("The active model is Sonnet"), never test jargon.
-- `-Because` messages are shown verbatim on failure. Write them as the action to
-  take ("run /model and select Sonnet as the model").
+- Failure messages are shown verbatim to learners, and Pester wraps `Should`
+  assertions in jargon ("Expected a value... but got $null or empty"). So do not use
+  `Should` for learner-facing checks: test the condition with plain PowerShell and
+  `throw` a friendly sentence when it fails. Shape: what isn't in place yet, then the
+  action to take ("No model has been picked yet. Inside Claude Code, run /model and
+  select Sonnet."). A test that throws nothing passes.
 - Read the workspace via `$env:CW_WORKSPACE` and the learner's Claude config via
   `$env:CW_CLAUDE_HOME` (read-only mount of their config dir).
 - Grading has a 75 second budget per check. No long builds or network waits in tests.
