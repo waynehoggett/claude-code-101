@@ -62,27 +62,28 @@ When you add a rule, Claude Code asks where to save it:
 
 ## 3 · Explore auto mode
 
-You saw auto mode in the cycle in step 1: a safety classifier reviews each action
-Claude wants to take and blocks the risky ones, so routine work flows without asking.
-It needs no setup and starts with conservative built-in rules, but you can read and
-extend those rules yourself:
+Auto mode needs no setup: it comes with built-in safety rules, and you can read and
+extend them yourself.
 
-1. **Open the rules.** Run `/permissions` again and select the **Auto mode** tab.
-   The built-in rules come in three types: **Soft allow** (fine to do without
-   asking), **Soft deny** (stop and check with you first), and **Hard deny** (never
-   do it). The **Environment** entry is a plain-language description of your setup
-   that gives the classifier context.
-2. **Add a Soft allow rule of your own.** Choose **Add a new rule** and save this
-   sentence as a **Soft allow**. Auto mode rules are plain sentences, not patterns:
+1. Run `/permissions` again and open the **Auto mode** tab.
+2. Add a new **Soft allow** rule:
 
 ```
 Running the date command is always safe
 ```
 
+:::note[The rule types]
+- **Soft allow**: fine to do without asking.
+- **Soft deny**: stop and check with you first.
+- **Hard deny**: never do it.
+- **Environment**: a plain-language description of your setup that gives the
+  classifier context.
+:::
+
 :::tip[Auto mode rules are prose]
-The classifier reads these rules the way a new teammate would, so write them like
-you'd brief a person: name what's trusted and why. "Pushing to staging is safe, it
-resets nightly" is a perfectly good rule.
+Rules are plain sentences, not patterns. The classifier reads them the way a new
+teammate would, so write them like you'd brief a person: name what's trusted and
+why. "Pushing to staging is safe, it resets nightly" is a perfectly good rule.
 :::
 
 Click **Check task** below when you're done.

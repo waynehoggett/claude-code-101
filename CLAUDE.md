@@ -11,6 +11,9 @@ source of grading truth). The full platform contract lives in the platform repo 
 - Steps state the goal, not the UI mechanics. Write "Select **Sonnet** as the model."
   and "Set the effort to **Medium**.", not "Use the up and down arrow keys to
   highlight Sonnet."
+- Keep step bodies to the action itself, in one or two short sentences. Anything
+  explanatory (what a feature is, why it matters, what the options mean) goes in a
+  collapsed `:::tip` or `:::note` after the step, never inline in the step.
 - Step headings are numbered: `## 1 · Title`. Sub-steps within a step are a numbered
   list with a bold lead-in sentence.
 - The last line of every task is exactly: `Click **Check task** below when you're done.`
