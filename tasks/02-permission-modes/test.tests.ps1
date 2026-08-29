@@ -36,14 +36,11 @@ Describe "Permissions and auto mode" {
         }
     }
 
-    It "You have explored auto mode with /auto-mode-setup" {
-        # Completing the setup writes autoMode rules to settings.json; walking away
-        # from it leaves a marker in .claude.json. Either counts as exploring.
-        $touched = ($null -ne $settings.autoMode) -or
-            ($null -ne $state.autoModeEnvSetup) -or
-            ($state.hasSeenAutoModeEntryWarning -eq $true)
-        if (-not $touched) {
-            throw "There's no sign of auto mode setup yet. Inside Claude Code, run /auto-mode-setup and follow it through."
+    It "You added an auto mode rule of your own" {
+        # The Auto mode tab in /permissions saves classifier rules to settings.json
+        # under the autoMode key.
+        if ($null -eq $settings.autoMode) {
+            throw "No auto mode rules of your own were found yet. Run /permissions, open the Auto mode tab, and add the allow rule from the instructions."
         }
     }
 }

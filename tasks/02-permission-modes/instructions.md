@@ -59,15 +59,23 @@ The same shape works for anything you trust, for example `Bash(npm run test:*)`.
 
 ## 3 · Explore auto mode
 
-Auto mode cuts down permission prompts a different way: a safety classifier reviews
-each action Claude wants to take and blocks the risky ones, so routine work flows
-without asking. Run the setup and follow it through:
+You saw auto mode in the cycle in step 1: a safety classifier reviews each action
+Claude wants to take and blocks the risky ones, so routine work flows without asking.
+It needs no setup and starts with conservative built-in rules, but you can read and
+extend those rules yourself:
+
+1. **Open the rules.** Run `/permissions` again and select the **Auto mode** tab.
+2. **Add an allow rule of your own.** Auto mode rules are plain sentences, not
+   patterns. Add this one:
 
 ```
-/auto-mode-setup
+Running the date command is always safe
 ```
 
-The setup scans your project and recent activity, then proposes rules for what auto
-mode may do here. Read through what it found before you decide what to keep.
+:::tip[Auto mode rules are prose]
+The classifier reads these rules the way a new teammate would, so write them like
+you'd brief a person: name what's trusted and why. "Pushing to staging is safe, it
+resets nightly" is a perfectly good rule.
+:::
 
 Click **Check task** below when you're done.
