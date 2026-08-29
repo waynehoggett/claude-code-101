@@ -41,6 +41,17 @@ pre-approves running the harmless `date` command:
 Bash(date:*)
 ```
 
+:::tip[Choosing a scope]
+When you add a rule, Claude Code asks where to save it:
+
+- **User settings** apply to you in every project on this machine. Use them for
+  tools you always trust, like the `date` rule here.
+- **Project settings** live in the repo and are shared with everyone who works on
+  it. Use them for rules the whole team agrees on, like running the test suite.
+- **Local settings** stay in the project but out of git, so they apply only to you,
+  only here. Use them for personal exceptions you don't want to share.
+:::
+
 :::tip[Reading the rule]
 `Bash(date:*)` means the Bash tool may run `date` with any arguments, without asking.
 The same shape works for anything you trust, for example `Bash(npm run test:*)`.
