@@ -5,11 +5,16 @@ build it, and commit. You'll do it on a small sample project.
 
 ## 1 · Plan and build a feature
 
-1. **Clone a sample project.** Pick your language, Python or JavaScript:
+1. **Clone a sample project.** Two versions of the same small project are available,
+   choose whichever language you prefer, you only need one.
+
+   Python (`ledger-py`):
 
 ```bash
 git clone https://github.com/waynehoggett/ledger-py
 ```
+
+   JavaScript (`ledger-js`):
 
 ```bash
 git clone https://github.com/waynehoggett/ledger-js
