@@ -20,11 +20,8 @@ git clone https://github.com/waynehoggett/ledger-py
 git clone https://github.com/waynehoggett/ledger-js
 ```
 
-2. **Start Claude Code in the project.** Change into the cloned folder and run:
-
-```bash
-claude
-```
+2. **Start Claude Code in the project.** Change into the cloned directory and start
+   Claude Code.
 
 3. **Plan the feature.** Switch to **Plan mode**, then ask:
 
