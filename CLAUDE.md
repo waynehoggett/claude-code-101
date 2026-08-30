@@ -38,6 +38,10 @@ source of grading truth). The full platform contract lives in the platform repo 
 - Read the workspace via `$env:CW_WORKSPACE` and the learner's Claude config via
   `$env:CW_CLAUDE_HOME` (read-only mount of their config dir).
 - Grading has a 75 second budget per check. No long builds or network waits in tests.
+- Prefer real checks over proxies: run the learner's tests rather than counting test
+  functions, ask git rather than parsing .git files. If the grader image lacks a tool
+  a real check needs, request it from the platform repo instead of settling for the
+  proxy.
 
 ## Environment facts
 

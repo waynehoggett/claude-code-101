@@ -1,0 +1,86 @@
+# Ship a feature
+
+Time to use Claude Code the way you will at work: explore a codebase, plan a change,
+build it, and commit. You'll do it on a small sample project.
+
+## 1 · Plan and build a feature
+
+1. **Clone a sample project.** Pick your language, Python or JavaScript:
+
+```bash
+git clone https://github.com/waynehoggett/ledger-py
+```
+
+```bash
+git clone https://github.com/waynehoggett/ledger-js
+```
+
+2. **Start Claude Code in the project.** Change into the cloned folder and run:
+
+```bash
+claude
+```
+
+3. **Plan the feature.** Switch to **Plan mode**, then ask:
+
+```
+Add support for deleting a transaction to this project.
+```
+
+4. **Build it.** Review the plan Claude presents, then approve it and watch the work
+   happen.
+
+5. **Commit.** Ask Claude:
+
+```
+Commit the change with a clear message.
+```
+
+:::tip[Why plan first?]
+In Plan mode Claude reads the codebase and proposes an approach before touching any
+file. Reviewing the plan is much cheaper than reviewing a pile of wrong edits, and
+if the plan misses something, say so and Claude will revise it before building.
+:::
+
+## 2 · Make tests non-negotiable
+
+1. **Check the tests.** Did Claude add tests for the new feature? Run the suite and
+   look. Python:
+
+```bash
+python -m unittest
+```
+
+   JavaScript:
+
+```bash
+npm test
+```
+
+2. **Set a rule.** Ask Claude:
+
+```
+Create a CLAUDE.md for this project with one rule: every code change must include tests that prove it works.
+```
+
+3. **Prove it sticks.** Ask for one more feature, and watch tests arrive without
+   being asked for:
+
+```
+Add support for renaming a category, then commit the change.
+```
+
+:::note[What belongs in CLAUDE.md]
+Claude reads CLAUDE.md at the start of every session. Keep it for things Claude
+can't work out by reading the code: your rules, your preferences, the commands that
+must or must never run. Anything about how the code works, Claude can rediscover
+itself.
+:::
+
+:::warning[About /init]
+You may see the /init command suggested for generating a CLAUDE.md from your
+codebase. Skip it. It fills the file with facts Claude can find out on its own, and
+the noise buries the rules that actually change Claude's behaviour.
+:::
+
+Click **Check task** below when you're done.
