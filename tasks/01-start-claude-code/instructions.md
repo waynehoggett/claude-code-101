@@ -33,22 +33,20 @@ downloaded but haven't reviewed.
 
 ## 3 · Pick your model
 
-At the Claude prompt, open the model picker:
+Select **Sonnet** as the model. The model decides how capable Claude is.
 
-```
-/model
-```
-
-Select **Sonnet** as the model.
+:::tip[The /model command]
+Run `/model` at the Claude prompt to open the model picker any time.
+:::
 
 ## 4 · Set the effort
 
-Set the effort to **Medium**, then press **Enter** to confirm.
+Set the effort to **Medium**, then press **Enter** to confirm. The effort decides how
+long Claude thinks before answering.
 
-:::tip[Model and effort, in one line]
-The model decides how capable Claude is, the effort decides how long it thinks before
-answering. Sonnet on Medium effort is a fast, capable default for this workshop. You
-can rerun `/model` any time to change either.
+:::tip[The /effort command]
+Run `/effort` at the Claude prompt to change the effort without opening the model
+picker.
 :::
 
 Click **Check task** below when you're done.
