@@ -59,6 +59,12 @@ python -m unittest
 npm test
 ```
 
+:::tip[Bash mode]
+You don't need to leave Claude Code to run a command. Prefix it with `!` at the
+Claude prompt, like `!npm test`, and it runs straight in your shell with the output
+visible to both you and Claude.
+:::
+
 2. **Set a rule.** Ask Claude:
 
 ```
