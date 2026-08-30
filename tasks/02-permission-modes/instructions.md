@@ -65,12 +65,16 @@ When you add a rule, Claude Code asks where to save it:
 Auto mode needs no setup: a built-in safety classifier judges each action Claude
 wants to take, and you can read and extend the guidance it works from.
 
-1. Run `/permissions` again and open the **Auto mode** tab.
-2. Add a new **Soft allow** rule:
+Add a new **Soft allow** rule that applies when Claude works in auto mode:
 
 ```
 Running the date command is always safe
 ```
+
+:::tip[Where auto mode rules live]
+Run `/permissions` and open the **Auto mode** tab to read the built-in guidance and
+add rules of your own.
+:::
 
 :::note[The rule types]
 - **Soft allow**: fine to do without asking.
