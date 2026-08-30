@@ -14,8 +14,13 @@ source of grading truth). The full platform contract lives in the platform repo 
 - Keep step bodies to the action itself, in one or two short sentences. Anything
   explanatory (what a feature is, why it matters, what the options mean) goes in a
   collapsed `:::tip` or `:::note` after the step, never inline in the step.
-- Step headings are numbered: `## 1 · Title`. Sub-steps within a step are a numbered
-  list with a bold lead-in sentence.
+- Step headings are numbered: `## 1 · Title`. Sub-steps are a bulleted list with a
+  lettered bold lead-in (`- **a. Clone a sample project.**`), since the headings own
+  the numbers. Letters are written by hand, so tips between sub-steps don't break
+  the sequence.
+- Indent everything belonging to a sub-step (labels, code fences) to the list's
+  continuation level, so blocks render nested under the sub-step instead of
+  snapping back to full width.
 - The last line of every task is exactly: `Click **Check task** below when you're done.`
 - No em-dashes anywhere, in prose or tests. Use commas or separate sentences.
 - One command per fenced block, no `$` prompts, no interleaved output. Every block

@@ -5,38 +5,38 @@ build it, and commit. You'll do it on a small sample project.
 
 ## 1 · Plan and build a feature
 
-1. **Clone a sample project.** Two versions of the same small project are available,
-   choose whichever language you prefer, you only need one.
+- **a. Clone a sample project.** Two versions of the same small project are
+  available, choose whichever language you prefer, you only need one.
 
-   Python (`ledger-py`):
+  Python (`ledger-py`):
 
-```bash
-git clone https://github.com/waynehoggett/ledger-py
-```
+  ```bash
+  git clone https://github.com/waynehoggett/ledger-py
+  ```
 
-   JavaScript (`ledger-js`):
+  JavaScript (`ledger-js`):
 
-```bash
-git clone https://github.com/waynehoggett/ledger-js
-```
+  ```bash
+  git clone https://github.com/waynehoggett/ledger-js
+  ```
 
-2. **Start Claude Code in the project.** Change into the cloned directory and start
-   Claude Code.
+- **b. Start Claude Code in the project.** Change into the cloned directory and
+  start Claude Code.
 
-3. **Plan the feature.** Switch to **Plan mode**, then ask:
+- **c. Plan the feature.** Switch to **Plan mode**, then ask:
 
-```
-Add support for deleting a transaction to this project.
-```
+  ```
+  Add support for deleting a transaction to this project.
+  ```
 
-4. **Build it.** Review the plan Claude presents, then approve it and watch the work
-   happen.
+- **d. Build it.** Review the plan Claude presents, then approve it and watch the
+  work happen.
 
-5. **Commit.** Ask Claude:
+- **e. Commit.** Ask Claude:
 
-```
-Commit the change with a clear message.
-```
+  ```
+  Commit the change with a clear message.
+  ```
 
 :::tip[Why plan first?]
 In Plan mode Claude reads the codebase and proposes an approach before touching any
@@ -46,18 +46,20 @@ if the plan misses something, say so and Claude will revise it before building.
 
 ## 2 · Make tests non-negotiable
 
-1. **Check the tests.** Did Claude add tests for the new feature? Run the suite and
-   look. Python:
+- **a. Check the tests.** Did Claude add tests for the new feature? Run the suite
+  and look.
 
-```bash
-python -m unittest
-```
+  Python:
 
-   JavaScript:
+  ```bash
+  python -m unittest
+  ```
 
-```bash
-npm test
-```
+  JavaScript:
+
+  ```bash
+  npm test
+  ```
 
 :::tip[Bash mode]
 You don't need to leave Claude Code to run a command. Prefix it with `!` at the
@@ -65,18 +67,18 @@ Claude prompt, like `!npm test`, and it runs straight in your shell with the out
 visible to both you and Claude.
 :::
 
-2. **Set a rule.** Ask Claude:
+- **b. Set a rule.** Ask Claude:
 
-```
-Create a CLAUDE.md for this project with one rule: every code change must include tests that prove it works.
-```
+  ```
+  Create a CLAUDE.md for this project with one rule: every code change must include tests that prove it works.
+  ```
 
-3. **Prove it sticks.** Ask for one more feature, and watch tests arrive without
-   being asked for:
+- **c. Prove it sticks.** Ask for one more feature, and watch tests arrive without
+  being asked for:
 
-```
-Add support for renaming a category, then commit the change.
-```
+  ```
+  Add support for renaming a category, then commit the change.
+  ```
 
 :::note[What belongs in CLAUDE.md]
 Claude reads CLAUDE.md at the start of every session. Keep it for things Claude

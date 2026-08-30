@@ -15,10 +15,10 @@ claude
 
 The first run walks you through a couple of setup questions:
 
-1. **Choose a theme.** Pick whichever matches this page (there's a light/dark toggle
-   in the top bar).
-2. **Choose how to sign in.** This environment already has your API key configured,
-   so select the option to use the `ANTHROPIC_API_KEY` when asked.
+- **a. Choose a theme.** Pick whichever matches this page (there's a light/dark
+  toggle in the top bar).
+- **b. Choose how to sign in.** This environment already has your API key
+  configured, so select the option to use the `ANTHROPIC_API_KEY` when asked.
 
 ## 2 · Trust the folder
 
