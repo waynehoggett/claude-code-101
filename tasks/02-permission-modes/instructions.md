@@ -62,8 +62,8 @@ When you add a rule, Claude Code asks where to save it:
 
 ## 3 · Explore auto mode
 
-Auto mode needs no setup: it comes with built-in safety rules, and you can read and
-extend them yourself.
+Auto mode needs no setup: a built-in safety classifier judges each action Claude
+wants to take, and you can read and extend the guidance it works from.
 
 1. Run `/permissions` again and open the **Auto mode** tab.
 2. Add a new **Soft allow** rule:
