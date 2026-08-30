@@ -1,8 +1,8 @@
 # Permission modes
 
-By default, Claude Code asks before it runs commands or edits files. Permission modes
-control how much it asks, and permission rules let you pre-approve the things you
-trust. In this task you'll try both.
+Permission modes control how much Claude Code asks before it acts, and permission
+rules let you decide what's always allowed and what never is. In this task you'll
+try both.
 
 ## 1 · Switch permission modes
 
