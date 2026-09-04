@@ -59,7 +59,7 @@ Hand a side question to a fork and keep your own session for the main work:
 ```
 
 When the fork's row in the agent view below the prompt shows it has finished, select
-it and press **Space** to read its answer.
+it and press **Space** to read its answer. If you don't see the panel, run `/tasks`.
 
 :::tip[Fork or branch?]
 A fork copies everything in your context into a separate background session and
