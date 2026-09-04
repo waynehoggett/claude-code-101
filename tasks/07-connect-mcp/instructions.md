@@ -7,7 +7,8 @@ project and use it.
 
 ## 1 · Add the server to the project
 
-- **a. Register it.** From your terminal, in the ledger project directory:
+- **a. Register it at :graded[project] scope.** From your terminal, in the ledger
+  project directory:
 
   ```bash
   claude mcp add --transport http --scope project context7 https://mcp.context7.com/mcp

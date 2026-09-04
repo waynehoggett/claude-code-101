@@ -12,7 +12,7 @@ also keeps notes of its own. Start Claude Code in your ledger project.
   /memory
   ```
 
-- **b. Add an instruction for yourself.** Ask:
+- **b. Add an instruction to your :graded[user-level CLAUDE.md].** Ask:
 
   ```
   Create my user-level CLAUDE.md with one instruction: after changing any code, run the project's test suite and show me the result before reporting back.
@@ -44,7 +44,7 @@ specific.
 
 ## 2 · Add an instruction that only applies to the tests
 
-Ask:
+Ask for a CLAUDE.md in the :graded[tests folder]:
 
 ```
 Add a CLAUDE.md inside the folder that holds the tests with one instruction: every test sets up its own data and never depends on another test.

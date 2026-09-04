@@ -6,7 +6,7 @@ project. Start Claude Code in your ledger project.
 
 ## 1 · Have Claude write the skill
 
-- **a. Describe the procedure.** Ask:
+- **a. Describe the procedure.** Ask for a project skill called :graded[changelog]:
 
   ```
   Create a project skill called changelog that reads the git history and updates CHANGELOG.md with one dated entry per commit in Keep a Changelog format.
@@ -34,7 +34,7 @@ Type:
 /changelog
 ```
 
-Then open `CHANGELOG.md` and check it lists the delete and rename work from task 3.
+Then open :graded[CHANGELOG.md] and check it lists the delete and rename work from task 3.
 
 :::note[Skills load when they're needed]
 Only a skill's name and description sit in context until it runs, so twenty skills

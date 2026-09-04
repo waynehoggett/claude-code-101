@@ -23,7 +23,7 @@ The first run walks you through a couple of setup questions:
 ## 2 · Trust the folder
 
 Claude Code asks whether you trust the files in this folder before it will work here.
-Your workspace is yours, so choose **Yes, proceed**.
+Your workspace is yours, so choose :graded[Yes, proceed].
 
 :::note[Why Claude Code asks this]
 Claude reads project files to understand your code. The trust prompt is your chance to
@@ -33,7 +33,7 @@ downloaded but haven't reviewed.
 
 ## 3 · Pick your model
 
-Select **Sonnet** as the model. The model decides how capable Claude is.
+Select :graded[Sonnet] as the model. The model decides how capable Claude is.
 
 :::tip[The /model command]
 Run `/model` at the Claude prompt to open the model picker any time.
@@ -41,7 +41,7 @@ Run `/model` at the Claude prompt to open the model picker any time.
 
 ## 4 · Set the effort
 
-Set the effort to **Medium**, then press **Enter** to confirm. The effort decides how
+Set the effort to :graded[Medium], then press **Enter** to confirm. The effort decides how
 long Claude thinks before answering.
 
 :::tip[The /effort command]

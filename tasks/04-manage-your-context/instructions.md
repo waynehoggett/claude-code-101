@@ -70,7 +70,7 @@ the side path yourself. Either way the original is untouched.
 
 ## 4 · Write a handoff and start clean
 
-- **a. Write it down.** Ask:
+- **a. Write it down.** Ask for a :graded[HANDOFF.md]:
 
   ```
   Write HANDOFF.md for this project: what we built, how it's tested, and what a new session should do next.

@@ -35,8 +35,8 @@ Claude away from secrets. Open the permission rules screen:
 /permissions
 ```
 
-Add a new **deny** rule in your **User settings** with this exact rule text, which
-stops Claude reading `.env` files:
+Add a new :graded[deny] rule in your :graded[User settings] with this exact rule
+text, which stops Claude reading `.env` files:
 
 ```
 Read(./.env*)

@@ -29,6 +29,14 @@ source of grading truth). The full platform contract lives in the platform repo 
   verbatim and a newline would submit an unfinished prompt.
 - Use `:::tip[Label]`, `:::note[Label]`, `:::warning[Label]` directives for asides.
   They render as collapsed accordions. Markdown only, raw HTML is stripped.
+- Mark a term the checks assert on exactly with the inline directive `:graded[...]`,
+  for example `:graded[deny]` or `:graded[User settings]`. It renders as an accent
+  pill with a "This exact value is graded" tooltip. Use it only for the handful of
+  terms where precision decides pass or fail (a setting, a scope, a required
+  filename), never for emphasis, which stays bold. A value the learner types
+  verbatim into the terminal stays in a fenced or inline code block, since those
+  carry the Insert and Copy buttons; `:graded[...]` suits terms they act on in a
+  menu, a settings screen, or a prompt to Claude.
 - Call CLAUDE.md content "instructions" or "preferences", never "rules", and never
   say it is enforced or non-negotiable. The docs say Claude treats CLAUDE.md as
   context, not enforced configuration. "Rules" is reserved for the `.claude/rules/`
