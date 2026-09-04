@@ -2,8 +2,11 @@ id: claude-code-101
 title: "Claude Code 101"
 description: "Your first hands-on session with Claude Code: start and configure it, control what it's allowed to do, and ship a real feature."
 version: 1
-estMinutes: 45
+estMinutes: 100
 tasks:
   - 01-start-claude-code
   - 02-permission-modes
   - 03-ship-a-feature
+  - 04-manage-your-context
+  - 05-memory-and-rules
+  - 06-write-a-skill
