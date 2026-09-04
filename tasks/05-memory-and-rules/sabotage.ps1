@@ -1,4 +1,4 @@
-# The rules and memory are all in place, but the step 1 change broke the suite.
+# The instructions and memory are all in place, but the step 1 change broke the suite.
 param(
     [Parameter(Mandatory)][string]$Workspace,
     [Parameter(Mandatory)][string]$ClaudeHome,

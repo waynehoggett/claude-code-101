@@ -31,7 +31,7 @@ to run.
 - **b. Compact with a focus.** Run:
 
   ```
-  /compact focus on the features we built and the testing rule
+  /compact focus on the features we built and the testing instruction
   ```
 
 - **c. Look again.** Run `/context` and compare it with the first picture.

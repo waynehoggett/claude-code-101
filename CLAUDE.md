@@ -29,6 +29,10 @@ source of grading truth). The full platform contract lives in the platform repo 
   verbatim and a newline would submit an unfinished prompt.
 - Use `:::tip[Label]`, `:::note[Label]`, `:::warning[Label]` directives for asides.
   They render as collapsed accordions. Markdown only, raw HTML is stripped.
+- Call CLAUDE.md content "instructions" or "preferences", never "rules", and never
+  say it is enforced or non-negotiable. The docs say Claude treats CLAUDE.md as
+  context, not enforced configuration. "Rules" is reserved for the `.claude/rules/`
+  feature, which is its official name.
 
 ## Grading style
 

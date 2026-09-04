@@ -64,7 +64,7 @@ class StoreDeleteTests(unittest.TestCase):
     Write-Text "$repo/tests/test_store_features.py" ($deleteTests + "`n")
     Commit "Add support for deleting a transaction"
 
-    Write-Text "$repo/CLAUDE.md" "# Rules`n`nEvery code change must include tests that prove it works.`n"
+    Write-Text "$repo/CLAUDE.md" "# Instructions`n`nEvery code change must include tests that prove it works.`n"
 
     $src = (Get-Content $store -Raw).TrimEnd() + @'
 
@@ -142,7 +142,7 @@ describe('store.delete', () => {
     Write-Text "$repo/test/store-features.test.js" ($deleteTests + "`n")
     Commit "Add support for deleting a transaction"
 
-    Write-Text "$repo/CLAUDE.md" "# Rules`n`nEvery code change must include tests that prove it works.`n"
+    Write-Text "$repo/CLAUDE.md" "# Instructions`n`nEvery code change must include tests that prove it works.`n"
 
     $src = (Get-Content $store -Raw).Replace("    get size() {", @'
     renameCategory(from, to) {

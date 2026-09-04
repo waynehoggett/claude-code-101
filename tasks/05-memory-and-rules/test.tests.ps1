@@ -1,4 +1,4 @@
-Describe "Rules and memory in place" {
+Describe "Instructions and memory in place" {
     BeforeAll {
         function Invoke-Suite($path) {
             $isJs = Test-Path "$path/package.json"
@@ -37,10 +37,10 @@ Describe "Rules and memory in place" {
     It "Your user-level CLAUDE.md runs the tests after every change" {
         $path = "$env:CW_CLAUDE_HOME/CLAUDE.md"
         if (-not (Test-Path $path)) {
-            throw "There's no user-level CLAUDE.md yet. Ask Claude to create one with the rule from step 1."
+            throw "There's no user-level CLAUDE.md yet. Ask Claude to create one with the instruction from step 1."
         }
         if ((Get-Content $path -Raw) -notmatch 'test') {
-            throw "Your user-level CLAUDE.md doesn't mention running the tests yet. Ask Claude to add the rule from step 1."
+            throw "Your user-level CLAUDE.md doesn't mention running the tests yet. Ask Claude to add the instruction from step 1."
         }
     }
 
@@ -50,10 +50,10 @@ Describe "Rules and memory in place" {
         }
         $found = @(@('tests', 'test') | ForEach-Object { "$($repo.Path)/$_/CLAUDE.md" } | Where-Object { Test-Path $_ })
         if ($found.Count -eq 0) {
-            throw "There's no CLAUDE.md inside the tests folder yet. Ask Claude to add one with the rule from step 2."
+            throw "There's no CLAUDE.md inside the tests folder yet. Ask Claude to add one with the instruction from step 2."
         }
         if ([string]::IsNullOrWhiteSpace((Get-Content $found[0] -Raw))) {
-            throw "The CLAUDE.md in the tests folder is empty. Ask Claude to put the rule from step 2 in it."
+            throw "The CLAUDE.md in the tests folder is empty. Ask Claude to put the instruction from step 2 in it."
         }
     }
 

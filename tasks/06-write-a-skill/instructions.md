@@ -1,6 +1,6 @@
 # Write a skill
 
-CLAUDE.md is for rules, memory is for facts, and skills are for procedures: something
+CLAUDE.md is for standing instructions, memory is for facts, and skills are for procedures: something
 you want Claude to do the same way every time, on demand. You'll write one for this
 project. Start Claude Code in your ledger project.
 
@@ -38,8 +38,8 @@ Then open `CHANGELOG.md` and check it lists the delete and rename work from task
 
 :::note[Skills load when they're needed]
 Only a skill's name and description sit in context until it runs, so twenty skills
-cost less than one long CLAUDE.md. That is the difference between a rule Claude must
-always carry and a procedure it fetches on demand.
+cost less than one long CLAUDE.md. That is the difference between an instruction
+Claude always carries and a procedure it fetches on demand.
 :::
 
 ## 3 · Commit it for the team

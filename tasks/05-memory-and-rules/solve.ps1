@@ -14,7 +14,7 @@ function Write-Text([string]$path, [string]$text) {
     [IO.File]::WriteAllText($path, $text.Replace("`r`n", "`n"))
 }
 
-Write-Text "$ClaudeHome/CLAUDE.md" "# My rules`n`nAfter changing any code, run the project's test suite and show me the result before reporting back.`n"
+Write-Text "$ClaudeHome/CLAUDE.md" "# My instructions`n`nAfter changing any code, run the project's test suite and show me the result before reporting back.`n"
 
 $memoryDir = "$ClaudeHome/projects/-workspace-ledger-$Language/memory"
 Write-Text "$memoryDir/feedback_commits.md" @"
@@ -30,7 +30,7 @@ Wayne wants one feature per commit, with a one-line commit message.
 Write-Text "$memoryDir/MEMORY.md" "# Memory index`n`n- [Commit preference](feedback_commits.md) - one feature per commit, one-line message`n"
 
 if ($Language -eq 'py') {
-    Write-Text "$repo/tests/CLAUDE.md" "# Test rules`n`nEvery test sets up its own data and never depends on another test.`n"
+    Write-Text "$repo/tests/CLAUDE.md" "# Test instructions`n`nEvery test sets up its own data and never depends on another test.`n"
 
     $store = "$repo/src/ledger/store.py"
     $src = (Get-Content $store -Raw).Replace(
@@ -51,7 +51,7 @@ class StoreDescriptionLengthTests(unittest.TestCase):
 '@ + "`n")
 }
 else {
-    Write-Text "$repo/test/CLAUDE.md" "# Test rules`n`nEvery test sets up its own data and never depends on another test.`n"
+    Write-Text "$repo/test/CLAUDE.md" "# Test instructions`n`nEvery test sets up its own data and never depends on another test.`n"
 
     $store = "$repo/src/ledger/store.js"
     $src = (Get-Content $store -Raw).Replace(

@@ -50,7 +50,7 @@ file. Reviewing the plan is much cheaper than reviewing a pile of wrong edits, a
 if the plan misses something, say so and Claude will revise it before building.
 :::
 
-## 2 · Make tests non-negotiable
+## 2 · Make tests the default
 
 - **a. Check the tests.** Did Claude add tests for the new feature? Run the suite
   and look.
@@ -67,10 +67,10 @@ if the plan misses something, say so and Claude will revise it before building.
   npm test
   ```
 
-- **b. Set a rule.** Ask Claude:
+- **b. Give Claude a standing instruction.** Ask Claude:
 
   ```
-  Create a CLAUDE.md for this project with one rule: every code change must include tests that prove it works.
+  Create a CLAUDE.md for this project with one instruction: every code change must include tests that prove it works.
   ```
 
 - **c. Prove it sticks.** Ask for one more feature, and watch tests arrive without
@@ -82,15 +82,17 @@ if the plan misses something, say so and Claude will revise it before building.
 
 :::note[What belongs in CLAUDE.md]
 Claude reads CLAUDE.md at the start of every session. Keep it for things Claude
-can't work out by reading the code: your rules, your preferences, the commands that
-must or must never run. Anything about how the code works, Claude can rediscover
-itself.
+can't work out by reading the code: your preferences, the way you want work done,
+the commands to run. Anything about how the code works, Claude can rediscover
+itself. Treat what you write there as instructions Claude follows, not rules it
+can't break: Claude reads them as context and does its best with them, and short,
+specific instructions are followed more reliably than long or vague ones.
 :::
 
 :::warning[About /init]
 You may see the /init command suggested for generating a CLAUDE.md from your
 codebase. Skip it. It fills the file with facts Claude can find out on its own, and
-the noise buries the rules that actually change Claude's behaviour.
+the noise buries the instructions that actually change Claude's behaviour.
 :::
 
 Click **Check task** below when you're done.
