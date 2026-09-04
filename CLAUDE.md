@@ -44,9 +44,28 @@ source of grading truth). The full platform contract lives in the platform repo 
   `$env:CW_CLAUDE_HOME` (read-only mount of their config dir).
 - Grading has a 75 second budget per check. No long builds or network waits in tests.
 - Prefer real checks over proxies: run the learner's tests rather than counting test
-  functions, ask git rather than parsing .git files. If the grader image lacks a tool
-  a real check needs, request it from the platform repo instead of settling for the
+  functions, ask git rather than parsing .git files. The grader image has pwsh, Pester,
+  git, python3, Node 22 and npm (`safe.directory *` is set). If a real check needs
+  something else, suggest it to Wayne for the platform repo instead of settling for the
   proxy.
+- Checks that read session transcripts look under
+  `$env:CW_CLAUDE_HOME/projects/<slug>/*.jsonl` (slug is the cwd with every
+  non-alphanumeric character replaced by `-`). The markers in those files are internal
+  to the pinned CLI version, so re-verify them whenever the platform bumps the CLI.
+
+## Verifying graders
+
+- Every task ships `solve.ps1` (`-Workspace`, `-ClaudeHome`, and `-Language py|js`
+  plus `-SourceRepo` for tasks that touch the ledger repo). It produces, without
+  Claude, exactly the files a passing learner leaves behind. It is the executable spec
+  of the task: when a live run passes grading but looks different from solve.ps1, one
+  of them is wrong.
+- Optional `sabotage.ps1` breaks the solved state in a way the grader must catch (a
+  failing test, for example). Optional `verify.psd1` lists `PassesBeforeStart` check
+  names that legitimately pass before the learner starts the task.
+- Run `./verify/Invoke-TaskVerification.ps1` before every push. It proves each grader
+  fails on the starting state, passes on the solved state, notices sabotage, and throws
+  only plain sentences. CI runs the same script on every push.
 
 ## Environment facts
 

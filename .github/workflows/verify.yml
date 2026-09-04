@@ -1,0 +1,25 @@
+name: Verify graders
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The grader image runs Node 22 and python3; match it so "passes here" means
+      # "passes for the learner".
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Pester
+        shell: pwsh
+        run: Install-Module Pester -MinimumVersion 5.5 -MaximumVersion 5.99 -Force -Scope CurrentUser
+
+      - name: Verify every task fails fresh and passes solved
+        shell: pwsh
+        run: ./verify/Invoke-TaskVerification.ps1
