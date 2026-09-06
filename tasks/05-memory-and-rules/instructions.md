@@ -59,13 +59,24 @@ instructions that follow a file pattern rather than a folder, put a markdown fil
 
 ## 3 · Let Claude remember something
 
-Ask:
+- **a. Tell it.** Ask:
 
-```
-Remember that I want one feature per commit, with a one-line commit message.
-```
+  ```
+  Remember that I want one feature per commit, with a one-line commit message.
+  ```
 
-Then run `/memory` again and look for the memory directory in the list.
+- **b. Read what it kept.** Memory lives on disk in your Claude config directory,
+  one folder per project. List it:
+
+  ```
+  !ls ~/.claude/projects/*/memory/
+  ```
+
+  Then open the index, which links to every memory Claude has saved:
+
+  ```
+  !cat ~/.claude/projects/*/memory/MEMORY.md
+  ```
 
 :::tip[Instructions versus memory]
 CLAUDE.md is what you decide; memory is what Claude learns. Memory is kept per project

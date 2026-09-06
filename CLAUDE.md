@@ -37,6 +37,12 @@ source of grading truth). The full platform contract lives in the platform repo 
   verbatim into the terminal stays in a fenced or inline code block, since those
   carry the Insert and Copy buttons; `:graded[...]` suits terms they act on in a
   menu, a settings screen, or a prompt to Claude.
+- Never direct learners to the "Open auto-memory folder" item in the `/memory` menu.
+  It shells out to a desktop file manager, the lab is headless, and Claude Code
+  swallows the failure, so nothing visibly happens. When a task touches auto-memory,
+  give the path instead: `~/.claude/projects/<slug>/memory/`, with `MEMORY.md` as the
+  index and one markdown file per memory beside it, and have learners `ls` or `cat`
+  it. The lab's config dir is `~/.claude`, which persists across restarts.
 - Call CLAUDE.md content "instructions" or "preferences", never "rules", and never
   say it is enforced or non-negotiable. The docs say Claude treats CLAUDE.md as
   context, not enforced configuration. "Rules" is reserved for the `.claude/rules/`
