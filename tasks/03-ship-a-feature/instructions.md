@@ -3,7 +3,7 @@
 Time to use Claude Code the way you will at work: explore a codebase, plan a change,
 build it, and commit. You'll do it on a small sample project.
 
-## 1 · Plan and build a feature
+## 1 · Clone the repository
 
 - **a. Clone a sample project.** Two versions of the same small project are
   available, choose whichever language you prefer, you only need one.
@@ -29,20 +29,13 @@ visible to both you and Claude.
 - **b. Start Claude Code in the project.** Change into the cloned directory and
   start Claude Code.
 
-- **c. Plan the feature.** Switch to **Plan mode**, then ask:
+## 2 · Plan the feature
 
-  ```
-  Add support for deleting a transaction to this project.
-  ```
+Switch to **Plan mode**, then ask:
 
-- **d. Build it.** Review the plan Claude presents, then approve it and watch the
-  work happen.
-
-- **e. Commit.** Ask Claude:
-
-  ```
-  Commit the change with a clear message.
-  ```
+```
+Add support for deleting a transaction to this project.
+```
 
 :::tip[Why plan first?]
 In Plan mode Claude reads the codebase and proposes an approach before touching any
@@ -50,7 +43,18 @@ file. Reviewing the plan is much cheaper than reviewing a pile of wrong edits, a
 if the plan misses something, say so and Claude will revise it before building.
 :::
 
-## 2 · Make tests the default
+## 3 · Build the feature
+
+- **a. Build it.** Review the plan Claude presents, then approve it and watch the
+  work happen.
+
+- **b. Commit.** Ask Claude:
+
+  ```
+  Commit the change with a clear message.
+  ```
+
+## 4 · Make tests the default
 
 - **a. Check the tests.** Did Claude add tests for the new feature? Run the suite
   and look.
