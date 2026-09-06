@@ -62,11 +62,11 @@ Describe "A feature, the Claude Code way" {
 
     It "CLAUDE.md asks for tests with every change" {
         if ($null -eq $repo -or -not $repo.ClaudeMd) {
-            throw "There's no CLAUDE.md in your ledger project yet. Ask Claude to create one with your testing instruction, as in step 4."
+            throw "There's no CLAUDE.md in your ledger project yet. Ask Claude to create one with the content from step 4."
         }
         $content = Get-Content "$($repo.Path)/CLAUDE.md" -Raw
         if ($content -notmatch 'test') {
-            throw "Your CLAUDE.md doesn't mention tests yet. Ask Claude to add the instruction that every code change must include tests."
+            throw "Your CLAUDE.md doesn't mention tests yet. Add the line that every code change includes tests that prove it works."
         }
     }
 

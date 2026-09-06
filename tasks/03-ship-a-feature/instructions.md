@@ -62,10 +62,12 @@ will rework the plan before it writes a line of code.
   Commit the change with a clear message.
   ```
 
-## 4 · Make tests the default
+## 4 · Teach Claude the project's conventions
 
-- **a. Check the tests.** Did Claude add tests for the new feature? Run the suite
-  and look.
+- **a. Check Claude's work.** Run the suite, then look at the code Claude wrote.
+  Did it add tests? Does the new code fail the way the rest of the store does, with
+  a `Result` in Python or a `ValidationError` in JavaScript, or did it invent its
+  own way?
 
   Python:
 
@@ -79,18 +81,64 @@ will rework the plan before it writes a line of code.
   npm test
   ```
 
-- **b. Give Claude a standing instruction.** Ask Claude:
+- **b. Add a CLAUDE.md.** Copy the block for your language, then ask Claude to
+  create `CLAUDE.md` in the project root with that content, pasting it into the
+  prompt.
 
-  ```
-  Create a CLAUDE.md for this project with one instruction: every code change must include tests that prove it works.
+  Python (`ledger-py`):
+
+  ```markdown
+  # Project
+
+  A tiny personal ledger: core library in src/ledger/, argparse CLI in src/cli/,
+  unittest tests in tests/. Standard library only.
+
+  # Commands
+
+  - Run tests: `python -m unittest`
+  - Try the CLI: `PYTHONPATH=src python -m cli.main --help`
+
+  # Code style
+
+  - Operations that can fail return a Result (src/ledger/result.py); never raise for expected failures
+  - Every code change includes tests that prove it works
+  - Standard library only, no new dependencies
   ```
 
-- **c. Prove it sticks.** Ask for one more feature, and watch tests arrive without
-  being asked for:
+  JavaScript (`ledger-js`):
+
+  ```markdown
+  # Project
+
+  A tiny personal ledger with an HTTP front end: core library in src/ledger/,
+  node:http API in src/api/, node:test tests in test/. No dependencies.
+
+  # Commands
+
+  - Run tests: `npm test`
+  - Start the API: `npm start`
+
+  # Code style
+
+  - Named exports only, no default exports
+  - Validation lives in the store and throws ValidationError; handlers turn it into a 400
+  - Every code change includes tests that prove it works
+  - No dependencies
+  ```
+
+- **c. Prove it sticks.** Ask for one more feature, then check the new code follows
+  the conventions and arrives with tests, without you asking for either:
 
   ```
   Add support for renaming a category, then commit the change.
   ```
+
+:::tip[Why these lines]
+Each line is something Claude can't safely infer: the exact test command, a
+convention the codebase follows that a newcomer might break, a dependency policy.
+Compare it with the facts left out, like what a store is or how the CLI is wired,
+which Claude reads from the code in seconds anyway.
+:::
 
 :::note[What belongs in CLAUDE.md]
 Claude reads CLAUDE.md at the start of every session. Keep it for things Claude

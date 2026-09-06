@@ -64,7 +64,23 @@ class StoreDeleteTests(unittest.TestCase):
     Write-Text "$repo/tests/test_store_features.py" ($deleteTests + "`n")
     Commit "Add support for deleting a transaction"
 
-    Write-Text "$repo/CLAUDE.md" "# Instructions`n`nEvery code change must include tests that prove it works.`n"
+    Write-Text "$repo/CLAUDE.md" @'
+# Project
+
+A tiny personal ledger: core library in src/ledger/, argparse CLI in src/cli/,
+unittest tests in tests/. Standard library only.
+
+# Commands
+
+- Run tests: `python -m unittest`
+- Try the CLI: `PYTHONPATH=src python -m cli.main --help`
+
+# Code style
+
+- Operations that can fail return a Result (src/ledger/result.py); never raise for expected failures
+- Every code change includes tests that prove it works
+- Standard library only, no new dependencies
+'@
 
     $src = (Get-Content $store -Raw).TrimEnd() + @'
 
@@ -142,7 +158,24 @@ describe('store.delete', () => {
     Write-Text "$repo/test/store-features.test.js" ($deleteTests + "`n")
     Commit "Add support for deleting a transaction"
 
-    Write-Text "$repo/CLAUDE.md" "# Instructions`n`nEvery code change must include tests that prove it works.`n"
+    Write-Text "$repo/CLAUDE.md" @'
+# Project
+
+A tiny personal ledger with an HTTP front end: core library in src/ledger/,
+node:http API in src/api/, node:test tests in test/. No dependencies.
+
+# Commands
+
+- Run tests: `npm test`
+- Start the API: `npm start`
+
+# Code style
+
+- Named exports only, no default exports
+- Validation lives in the store and throws ValidationError; handlers turn it into a 400
+- Every code change includes tests that prove it works
+- No dependencies
+'@
 
     $src = (Get-Content $store -Raw).Replace("    get size() {", @'
     renameCategory(from, to) {
