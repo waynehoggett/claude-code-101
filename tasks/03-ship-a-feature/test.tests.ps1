@@ -48,14 +48,23 @@ Describe "A feature, the Claude Code way" {
         $script:repo = $candidates | Sort-Object Commits, ClaudeMd -Descending | Select-Object -First 1
 
         # Every input the learner submits, slash commands included, is appended to
-        # <config dir>/history.jsonl as {"display":"/diff",...}. That is the reliable
-        # record for /diff: it opens a viewer, and closing the viewer counts as a
-        # dismissed dialog, which writes no local_command line to the transcript. The
-        # transcript marker is kept as a fallback. Both are internal to the pinned CLI.
+        # <config dir>/history.jsonl as {"display":"/diff","project":"/workspace/...",...}.
+        # That is the reliable record for /diff: it opens a viewer, and closing the
+        # viewer counts as a dismissed dialog, which writes no local_command line to the
+        # transcript. The file persists for the whole workshop session and covers every
+        # project, so only a /diff typed inside the ledger project counts. The transcript
+        # marker is kept as a fallback. Both are internal to the pinned CLI version.
         $script:readDiff = $false
         $history = "$env:CW_CLAUDE_HOME/history.jsonl"
-        if ((Test-Path $history) -and (Select-String -Path $history -Pattern '"display"\s*:\s*"/diff' -Quiet)) {
-            $script:readDiff = $true
+        if ($repo -and (Test-Path $history)) {
+            $projectName = [regex]::Escape((Split-Path $repo.Path -Leaf))
+            foreach ($line in Get-Content $history) {
+                try { $entry = $line | ConvertFrom-Json } catch { continue }
+                if ($entry.display -match '^/diff(\s|$)' -and $entry.project -match "[/\\]$projectName$") {
+                    $script:readDiff = $true
+                    break
+                }
+            }
         }
         if (-not $readDiff) {
             $transcripts = @(Get-ChildItem "$env:CW_CLAUDE_HOME/projects" -Recurse -Filter *.jsonl -ErrorAction SilentlyContinue)
