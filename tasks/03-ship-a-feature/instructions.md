@@ -38,9 +38,9 @@ Add support for deleting a transaction to this project.
 ```
 
 :::tip[Why plan first?]
-In Plan mode Claude reads the codebase and proposes an approach before touching any
-file. Reviewing the plan is much cheaper than reviewing a pile of wrong edits, and
-if the plan misses something, say so and Claude will revise it before building.
+In Plan mode Claude can read the codebase and run read-only commands, but it can't
+edit anything. It explores, works out an approach, and presents it as a plan for you
+to approve before a single file changes.
 :::
 
 :::tip[Actually read the plan]
