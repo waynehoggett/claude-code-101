@@ -18,6 +18,13 @@ project. Start Claude Code in your ledger project.
   !cat .claude/skills/changelog/SKILL.md
   ```
 
+- **c. Load it.** Claude Code found its skills when the session started, so tell it
+  to look again:
+
+  ```
+  /reload-skills
+  ```
+
 :::tip[Anatomy of a skill]
 A skill is a folder under `.claude/skills/` holding a `SKILL.md`. The frontmatter
 carries a `description`, which is how Claude decides on its own when the skill applies;
