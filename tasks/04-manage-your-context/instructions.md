@@ -67,14 +67,30 @@ named them.
 
 ## 3 · Fork for a side question
 
-Hand a side question to a fork and keep your own session for the main work:
+- **a. Fork with a question.** Hand a side question to a copy of your session and
+  keep your own for the main work:
 
-```
-/fork Which category names appear in the tests, and are any of them inconsistent?
-```
+  ```
+  /fork Which category names appear in the tests, and are any of them inconsistent?
+  ```
 
-When the fork's row in the agent view below the prompt shows it has finished, select
-it and press **Space** to read its answer. If you don't see the panel, run `/tasks`.
+  Claude Code confirms with one line naming the fork's row in the agent view.
+
+- **b. Peek at the fork.** Press **←** on an empty prompt to open the agent view,
+  move to the fork's row with **↑** and **↓**, and press **Space** to read its latest
+  output. You can type a reply there and press **Enter** to send it without leaving
+  your own session.
+
+- **c. Switch into it.** With the fork's row selected, press **→** to attach. The
+  fork becomes your interactive session and your original moves to the background.
+
+- **d. Come back.** Press **←** on an empty prompt to return to the agent view,
+  select your original session's row, and press **→** to attach to it again.
+
+:::tip[If the panel doesn't appear]
+Run `/tasks` to list the session's background work. Press **Enter** on a row to read
+its latest message, or **a** to attach to it.
+:::
 
 :::tip[Fork or branch?]
 A fork copies everything in your context into a separate background session and
