@@ -19,6 +19,19 @@ Describe "A reusable skill" {
         $script:changelogSkill = $skills | Where-Object {
             $_.Directory.Name -match 'changelog' -or (Get-Content $_.FullName -Raw) -match 'changelog'
         } | Select-Object -First 1
+
+        # When Claude picks a skill itself, the transcript holds an assistant tool_use
+        # named Skill with the skill's name in its input. A skill the learner typed as a
+        # slash command leaves a local_command line instead, so this marker only appears
+        # for step 4. Internal to the pinned CLI version.
+        $transcripts = @(Get-ChildItem "$env:CW_CLAUDE_HOME/projects" -Recurse -Filter *.jsonl -ErrorAction SilentlyContinue)
+        $script:autoInvoked = $false
+        foreach ($file in $transcripts) {
+            if (Select-String -Path $file.FullName -Pattern '(?=.*"name"\s*:\s*"Skill")(?=.*"skill"\s*:\s*"[^"]*changelog")' -Quiet) {
+                $script:autoInvoked = $true
+                break
+            }
+        }
     }
 
     It "A changelog skill exists in the project" {
@@ -55,6 +68,19 @@ Describe "A reusable skill" {
         $dirty = @(git -C $repo.Path status --porcelain .claude/skills CHANGELOG.md 2>$null)
         if ($tracked.Count -lt 2 -or $dirty.Count -gt 0) {
             throw "The skill and CHANGELOG.md aren't committed yet. Ask Claude to commit the skill and the changelog."
+        }
+    }
+
+    It "Claude picked the skill itself from a plain request" {
+        if ($null -eq $repo) {
+            throw "Your ledger project wasn't found in the workspace. Finish the earlier tasks first, then come back to this one."
+        }
+        if (-not $autoInvoked) {
+            throw "Claude hasn't used the changelog skill on its own yet. Without typing /changelog, ask it in plain words to bring the changelog up to date, as in step 4."
+        }
+        $content = Get-Content "$($repo.Path)/CHANGELOG.md" -Raw -ErrorAction SilentlyContinue
+        if ($content -notmatch 'skill') {
+            throw "CHANGELOG.md doesn't list the commit that added the skill yet. Ask Claude in plain words to bring the changelog up to date and commit it."
         }
     }
 }

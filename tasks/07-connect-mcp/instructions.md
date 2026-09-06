@@ -17,6 +17,13 @@ project and use it.
 - **b. Approve it.** Start Claude Code and choose to use the project's MCP server
   when asked.
 
+:::tip[HTTP or stdio]
+Context7 is an HTTP server: it runs on someone else's machine and Claude Code talks
+to it over the network, which is the usual shape for a hosted service. A stdio
+server is a local process Claude Code starts itself, the right shape for a tool that
+needs your filesystem or a script of your own. The `--transport` flag says which.
+:::
+
 :::tip[Scopes]
 - **Local**: only you, only this project. The default.
 - **User**: only you, every project.
@@ -44,7 +51,8 @@ Use Context7 to check the current docs for the test framework this project uses,
 :::tip[Tools cost context]
 Every connected server adds its tool descriptions to your context. Run `/context`
 and you'll see them. Connect what you use, and prefer a command-line tool or a skill
-when one does the job.
+when one does the job. Toggle a server off in `/mcp` and Claude Code stops
+connecting to it but keeps its configuration, so you can turn it back on later.
 :::
 
 Click **Check task** below when you're done.

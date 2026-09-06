@@ -39,3 +39,29 @@ Write-Text "$repo/CHANGELOG.md" $changelog
 git -C $repo add -A
 git -C $repo commit --quiet -m "Add a changelog skill and the first changelog"
 if ($LASTEXITCODE -ne 0) { throw "Commit failed." }
+
+# Step 4: asked in plain words, Claude invoked the skill itself, which added the
+# commit above to the changelog, then committed. The transcript line copies the
+# assistant tool_use shape Claude Code 2.1.x writes for a model-invoked skill.
+$latest = git -C $repo log -1 --date=short --format='%ad %s'
+$changelog = (Get-Content "$repo/CHANGELOG.md" -Raw).TrimEnd() + "`n- $latest`n"
+Write-Text "$repo/CHANGELOG.md" $changelog
+git -C $repo add -A
+git -C $repo commit --quiet -m "Update the changelog"
+if ($LASTEXITCODE -ne 0) { throw "Commit failed." }
+
+$cwd = "/workspace/ledger-$Language"
+$sessionId = [guid]::NewGuid().ToString()
+$projectDir = "$ClaudeHome/projects/-workspace-ledger-$Language"
+New-Item -ItemType Directory -Path $projectDir -Force | Out-Null
+$skillLine = @{
+    parentUuid = [guid]::NewGuid().ToString(); isSidechain = $false; type = 'assistant'
+    message = @{
+        role = 'assistant'; type = 'message'; model = 'claude-sonnet-4-5'
+        content = @([ordered]@{ type = 'tool_use'; id = 'toolu_workshop'; name = 'Skill'; input = @{ skill = 'changelog' } })
+        stop_reason = 'tool_use'
+    }
+    uuid = [guid]::NewGuid().ToString(); timestamp = (Get-Date).ToUniversalTime().ToString('o')
+    sessionId = $sessionId; cwd = $cwd; version = '2.1.251'; gitBranch = 'main'
+} | ConvertTo-Json -Compress -Depth 6
+[IO.File]::WriteAllText("$projectDir/$sessionId.jsonl", $skillLine + "`n")

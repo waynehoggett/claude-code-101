@@ -56,7 +56,28 @@ will rework the plan before it writes a line of code.
 - **a. Build it.** Review the plan Claude presents, then approve it and watch the
   work happen.
 
-- **b. Commit.** Ask Claude:
+- **b. Read the change.** Claude's summary is true, but it isn't the whole change.
+  Open the diff and read every file it touched before you keep any of it:
+
+  ```
+  /diff
+  ```
+
+:::tip[What to look for]
+Three things deserve a second look every time:
+
+- **Changes you didn't ask for.** A config value edited while Claude was in the
+  file, or a helper rewritten that you never mentioned.
+- **Tests that got weaker.** Any test skipped, deleted, or loosened until it passed.
+- **New packages and hard-coded values.** A dependency added for one function, or a
+  URL or key written straight into the code.
+
+Use **↑** and **↓** to move between files and **Enter** to open one. If the whole
+change is wrong, press **Esc** twice to open the rewind menu and restore the code
+and the conversation to before the prompt that produced it.
+:::
+
+- **c. Commit.** Ask Claude:
 
   ```
   Commit the change with a clear message.

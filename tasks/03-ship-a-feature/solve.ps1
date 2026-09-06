@@ -25,6 +25,20 @@ function Commit([string]$message) {
     if ($LASTEXITCODE -ne 0) { throw "Commit failed: $message" }
 }
 
+# The learner ran /diff inside Claude Code before committing. The transcript line
+# copies the local_command shape Claude Code 2.1.x writes.
+$cwd = "/workspace/ledger-$Language"
+$sessionId = [guid]::NewGuid().ToString()
+$projectDir = "$ClaudeHome/projects/-workspace-ledger-$Language"
+New-Item -ItemType Directory -Path $projectDir -Force | Out-Null
+$diffLine = @{
+    parentUuid = [guid]::NewGuid().ToString(); isSidechain = $false; type = 'system'; subtype = 'local_command'
+    content = "<command-name>/diff</command-name>`n<command-message>diff</command-message>`n<command-args></command-args>"
+    level = 'info'; timestamp = (Get-Date).ToUniversalTime().ToString('o'); uuid = [guid]::NewGuid().ToString(); isMeta = $false
+    sessionId = $sessionId; cwd = $cwd; version = '2.1.251'; gitBranch = 'main'
+} | ConvertTo-Json -Compress -Depth 5
+[IO.File]::WriteAllText("$projectDir/$sessionId.jsonl", $diffLine + "`n")
+
 if ($Language -eq 'py') {
     $store = "$repo/src/ledger/store.py"
     $src = Get-Content $store -Raw

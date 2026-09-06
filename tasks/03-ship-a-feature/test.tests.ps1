@@ -46,11 +46,26 @@ Describe "A feature, the Claude Code way" {
             Where-Object { $null -ne $_ }
         # If both repos were cloned, grade the one that was worked in.
         $script:repo = $candidates | Sort-Object Commits, ClaudeMd -Descending | Select-Object -First 1
+
+        # A slash command the learner ran leaves a local_command line naming it in the
+        # session transcript under <config dir>/projects/<slug>/<session>.jsonl. The
+        # marker is internal to the pinned CLI version.
+        $transcripts = @(Get-ChildItem "$env:CW_CLAUDE_HOME/projects" -Recurse -Filter *.jsonl -ErrorAction SilentlyContinue)
+        $script:readDiff = $false
+        foreach ($file in $transcripts) {
+            if (Select-String -Path $file.FullName -Pattern '<command-name>/diff' -Quiet) { $script:readDiff = $true; break }
+        }
     }
 
     It "A ledger project is cloned in your workspace" {
         if ($null -eq $repo) {
             throw "Neither ledger-py nor ledger-js was found in your workspace yet. Clone one with the git clone command in the instructions."
+        }
+    }
+
+    It "You read the change with /diff before keeping it" {
+        if (-not $readDiff) {
+            throw "No /diff was found in your sessions yet. Inside Claude Code, run /diff and read the change before you commit it."
         }
     }
 

@@ -55,4 +55,25 @@ Project skills travel with git, so everyone who clones the repo gets `/changelog
 Personal skills in `~/.claude/skills/` follow you from project to project instead.
 :::
 
+## 4 · Let Claude pick the skill itself
+
+The commit you just made isn't in the changelog yet. This time don't type the
+command. Ask in plain words:
+
+```
+Bring the changelog up to date and commit it.
+```
+
+Watch Claude reach for the skill on its own, then check that :graded[CHANGELOG.md]
+gained an entry for the commit from step 3.
+
+:::tip[The description does the matching]
+You never said "changelog skill", yet Claude used it. Before every reply, Claude
+compares your request with the description of each skill it can see and loads the
+ones that fit. That is why the description matters more than the name: write it as
+the situations the skill is for, not a label. If Claude edited the file by hand
+instead of using the skill, its description was too vague to match your request.
+Ask Claude to rewrite the description to say when the skill applies, then try again.
+:::
+
 Click **Check task** below when you're done.

@@ -127,8 +127,11 @@ the machine, and the teammate who picks it up.
 :::
 
 :::note[Undo a bad step]
-Press **Esc** twice, or run `/rewind`, to roll back the conversation, the files, or
-both to an earlier point.
+Press **Esc** twice on an empty prompt, or run `/rewind`, to open the rewind menu.
+Pick the prompt that went wrong, then choose **Restore code and conversation** to
+roll both back, or restore just one of them. One limit worth knowing: files changed
+by shell commands Claude ran, such as a package install or an `rm`, aren't tracked,
+so they don't roll back.
 :::
 
 Click **Check task** below when you're done.
