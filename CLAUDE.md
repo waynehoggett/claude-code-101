@@ -64,6 +64,10 @@ source of grading truth). The full platform contract lives in the platform repo 
   `$env:CW_CLAUDE_HOME/projects/<slug>/*.jsonl` (slug is the cwd with every
   non-alphanumeric character replaced by `-`). The markers in those files are internal
   to the pinned CLI version, so re-verify them whenever the platform bumps the CLI.
+- A slash command that only opens a viewer or dialog (`/diff`, for example) leaves no
+  `local_command` line when the learner closes it. To prove a command was typed, read
+  `$env:CW_CLAUDE_HOME/history.jsonl` instead: every submitted input is appended there
+  as `{"display":"/diff",...}`.
 
 ## Verifying graders
 

@@ -47,13 +47,21 @@ Describe "A feature, the Claude Code way" {
         # If both repos were cloned, grade the one that was worked in.
         $script:repo = $candidates | Sort-Object Commits, ClaudeMd -Descending | Select-Object -First 1
 
-        # A slash command the learner ran leaves a local_command line naming it in the
-        # session transcript under <config dir>/projects/<slug>/<session>.jsonl. The
-        # marker is internal to the pinned CLI version.
-        $transcripts = @(Get-ChildItem "$env:CW_CLAUDE_HOME/projects" -Recurse -Filter *.jsonl -ErrorAction SilentlyContinue)
+        # Every input the learner submits, slash commands included, is appended to
+        # <config dir>/history.jsonl as {"display":"/diff",...}. That is the reliable
+        # record for /diff: it opens a viewer, and closing the viewer counts as a
+        # dismissed dialog, which writes no local_command line to the transcript. The
+        # transcript marker is kept as a fallback. Both are internal to the pinned CLI.
         $script:readDiff = $false
-        foreach ($file in $transcripts) {
-            if (Select-String -Path $file.FullName -Pattern '<command-name>/diff' -Quiet) { $script:readDiff = $true; break }
+        $history = "$env:CW_CLAUDE_HOME/history.jsonl"
+        if ((Test-Path $history) -and (Select-String -Path $history -Pattern '"display"\s*:\s*"/diff' -Quiet)) {
+            $script:readDiff = $true
+        }
+        if (-not $readDiff) {
+            $transcripts = @(Get-ChildItem "$env:CW_CLAUDE_HOME/projects" -Recurse -Filter *.jsonl -ErrorAction SilentlyContinue)
+            foreach ($file in $transcripts) {
+                if (Select-String -Path $file.FullName -Pattern '<command-name>/diff' -Quiet) { $script:readDiff = $true; break }
+            }
         }
     }
 
