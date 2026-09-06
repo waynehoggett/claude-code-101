@@ -43,6 +43,14 @@ file. Reviewing the plan is much cheaper than reviewing a pile of wrong edits, a
 if the plan misses something, say so and Claude will revise it before building.
 :::
 
+:::tip[Actually read the plan]
+The plan is the cheapest place to catch a wrong turn, but only if you read it rather
+than skim to the approve button. Check which files it will touch, whether it adds
+tests, whether it changes anything you didn't ask for, and whether it pulls in a new
+dependency. If any of that looks off, reply with what you want changed and Claude
+will rework the plan before it writes a line of code.
+:::
+
 ## 3 · Build the feature
 
 - **a. Build it.** Review the plan Claude presents, then approve it and watch the
