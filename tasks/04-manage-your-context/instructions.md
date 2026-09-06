@@ -28,16 +28,28 @@ to run.
   Walk me through how a transaction gets from the front end to the summary, file by file.
   ```
 
-- **b. See what that cost.** Run `/context` again and compare the messages block
-  with the first picture.
+- **b. Give it something to write.** Ask:
 
-- **c. Compact with a focus.** Run:
+  ```
+  Review every file in this project. For each function, quote it in full and say what you would change and why.
+  ```
+
+- **c. See what that cost.** Run `/context` again and compare the **Messages** line
+  with the first picture. Watch the token count, not the percentage.
+
+- **d. Compact with a focus.** Run:
 
   ```
   /compact focus on the features we built and the testing instruction
   ```
 
-- **d. Look one more time.** Run `/context` and see how much came back.
+- **e. Look one more time.** Run `/context` and see how much came back.
+
+:::note[Small project, small numbers]
+This project is a few hundred lines, so even a full review only moves the meter a
+few points. A real codebase, a long test log, or an hour of debugging fills the same
+window in a morning. The mechanics are identical, only the scale changes.
+:::
 
 :::tip[Lost in the middle]
 Models pay the most attention to the start and the end of their context and the least
