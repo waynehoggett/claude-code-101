@@ -28,13 +28,16 @@ to run.
   Walk me through how a transaction gets from the front end to the summary, file by file.
   ```
 
-- **b. Compact with a focus.** Run:
+- **b. See what that cost.** Run `/context` again and compare the messages block
+  with the first picture.
+
+- **c. Compact with a focus.** Run:
 
   ```
   /compact focus on the features we built and the testing instruction
   ```
 
-- **c. Look again.** Run `/context` and compare it with the first picture.
+- **d. Look one more time.** Run `/context` and see how much came back.
 
 :::tip[Lost in the middle]
 Models pay the most attention to the start and the end of their context and the least
