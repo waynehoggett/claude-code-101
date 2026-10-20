@@ -24,10 +24,13 @@ Describe "A reusable skill" {
         # named Skill with the skill's name in its input. A skill the learner typed as a
         # slash command leaves a local_command line instead, so this marker only appears
         # for step 4. Internal to the pinned CLI version.
+        # The ^ anchor matters: unanchored, the lookaheads are retried from every
+        # character of every line, which is quadratic on the long lines a real
+        # session writes and blew through the grading budget.
         $transcripts = @(Get-ChildItem "$env:CW_CLAUDE_HOME/projects" -Recurse -Filter *.jsonl -ErrorAction SilentlyContinue)
         $script:autoInvoked = $false
         foreach ($file in $transcripts) {
-            if (Select-String -Path $file.FullName -Pattern '(?=.*"name"\s*:\s*"Skill")(?=.*"skill"\s*:\s*"[^"]*changelog")' -Quiet) {
+            if (Select-String -Path $file.FullName -Pattern '^(?=.*"name"\s*:\s*"Skill")(?=.*"skill"\s*:\s*"[^"]*changelog")' -Quiet) {
                 $script:autoInvoked = $true
                 break
             }

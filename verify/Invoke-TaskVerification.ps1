@@ -51,14 +51,23 @@ foreach ($lang in $Language) {
     $repoCache[$lang] = $cache
 }
 
-function Invoke-Grade([string]$spec, [string]$workspace, [string]$claudeHome) {
+# The platform gives a grade 75 seconds and pods are slower than CI, so a grade that
+# needs more than this here is too close to the limit for a learner.
+$GradeBudgetSeconds = 30
+
+function Invoke-Grade([string]$spec, [string]$workspace, [string]$claudeHome, [string]$what) {
     $env:CW_WORKSPACE = $workspace
     $env:CW_CLAUDE_HOME = $claudeHome
     $cfg = New-PesterConfiguration
     $cfg.Run.Path = $spec
     $cfg.Run.PassThru = $true
     $cfg.Output.Verbosity = 'None'
+    $timer = [Diagnostics.Stopwatch]::StartNew()
     $result = Invoke-Pester -Configuration $cfg
+    $seconds = [int]$timer.Elapsed.TotalSeconds
+    if ($seconds -gt $GradeBudgetSeconds) {
+        $problems.Add("${what}: grading took $seconds seconds, over the $GradeBudgetSeconds second budget")
+    }
 
     $blockError = $result.Containers |
         ForEach-Object { $_.Blocks } |
@@ -119,18 +128,18 @@ foreach ($lang in $Language) {
         }
 
         $spec = "$taskDir/test.tests.ps1"
-        $fresh = @(Invoke-Grade $spec $ws $claudeHome)
+        $fresh = @(Invoke-Grade $spec $ws $claudeHome "$label fresh")
         if ($fresh.Count -eq 0) { $problems.Add("${label}: grader ran no checks at all") }
 
         Invoke-Solve $taskDir $ws $claudeHome $lang
-        $solved = @(Invoke-Grade $spec $ws $claudeHome)
+        $solved = @(Invoke-Grade $spec $ws $claudeHome "$label solved")
 
         $sabotaged = $null
         if (Test-Path "$taskDir/sabotage.ps1") {
             $params = @{ Workspace = $ws; ClaudeHome = $claudeHome }
             if ((Get-Command "$taskDir/sabotage.ps1").Parameters.ContainsKey('Language')) { $params.Language = $lang }
             & "$taskDir/sabotage.ps1" @params
-            $sabotaged = @(Invoke-Grade $spec $ws $claudeHome)
+            $sabotaged = @(Invoke-Grade $spec $ws $claudeHome "$label sabotaged")
         }
 
         $rows = foreach ($check in $fresh) {

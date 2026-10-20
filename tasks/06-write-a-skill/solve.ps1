@@ -64,4 +64,17 @@ $skillLine = @{
     uuid = [guid]::NewGuid().ToString(); timestamp = (Get-Date).ToUniversalTime().ToString('o')
     sessionId = $sessionId; cwd = $cwd; version = '2.1.251'; gitBranch = 'main'
 } | ConvertTo-Json -Compress -Depth 6
-[IO.File]::WriteAllText("$projectDir/$sessionId.jsonl", $skillLine + "`n")
+# Real sessions hold very long lines by now (task 4 asks Claude to quote every
+# function), and the grader scans them all. Keep one here, ahead of the skill line,
+# so a transcript check that is slow on long lines fails verification's time budget.
+$longLine = @{
+    parentUuid = [guid]::NewGuid().ToString(); isSidechain = $false; type = 'assistant'
+    message = @{
+        role = 'assistant'; type = 'message'; model = 'claude-sonnet-4-5'
+        content = @([ordered]@{ type = 'text'; text = ('def add(self, description, category, amount): ' * 2200) })
+        stop_reason = 'end_turn'
+    }
+    uuid = [guid]::NewGuid().ToString(); timestamp = (Get-Date).ToUniversalTime().ToString('o')
+    sessionId = $sessionId; cwd = $cwd; version = '2.1.251'; gitBranch = 'main'
+} | ConvertTo-Json -Compress -Depth 6
+[IO.File]::WriteAllText("$projectDir/$sessionId.jsonl", $longLine + "`n" + $skillLine + "`n")
