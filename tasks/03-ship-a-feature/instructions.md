@@ -27,7 +27,7 @@ visible to both you and Claude.
 :::
 
 - **b. Start Claude Code in the project.** Change into the cloned directory and
-  start Claude Code.
+  start Claude Code. It's a new folder, so choose **Yes, I trust this folder** again.
 
 ## 2 · Plan the feature
 

@@ -33,7 +33,7 @@ Describe "Claude Code is set up" {
                 Where-Object { $_.hasTrustDialogAccepted -eq $true })
         }
         if ($trusted.Count -eq 0) {
-            throw "Claude Code has started, but your workspace folder isn't trusted yet. When Claude Code asks whether you trust the files in this folder, choose Yes, proceed."
+            throw "Claude Code has started, but your workspace folder isn't trusted yet. When Claude Code asks whether you trust the files in this folder, choose Yes, I trust this folder."
         }
     }
 

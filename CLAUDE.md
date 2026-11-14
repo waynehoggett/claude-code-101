@@ -96,6 +96,9 @@ source of grading truth). The full platform contract lives in the platform repo 
 
 - Learners work in `/workspace`, which persists across environment restarts. It
   starts empty; there is no starter repo.
-- `ANTHROPIC_API_KEY` is already set in the pod. Never tell learners to paste a key.
+- The learner's API key is already configured. The pod sets `CW_ANTHROPIC_API_KEY` and
+  the lab's managed `apiKeyHelper` hands it to Claude Code, so a first run asks no
+  sign-in or API key question. Never tell learners to paste a key, and never refer to
+  `ANTHROPIC_API_KEY`, which is not set.
 - The Claude Code CLI version is pinned by the platform (currently 2.1.x). Flag any
   version-sensitive UI wording for the live smoke test.

@@ -13,12 +13,12 @@ Code there:
 claude
 ```
 
-The first run walks you through a couple of setup questions:
+The first run walks you through a couple of setup screens. Your API key is already
+set up, so there's no sign-in step.
 
 - **a. Choose a theme.** Pick whichever matches this page (there's a light/dark
   toggle in the top bar).
-- **b. Choose how to sign in.** This environment already has your API key
-  configured, so select the option to use the `ANTHROPIC_API_KEY` when asked.
+- **b. Read the security notes,** then continue.
 
 :::note[Where else Claude Code runs]
 The terminal is where new features ship first, and it's what you'll use today. The
@@ -30,7 +30,7 @@ here carries over.
 ## 2 · Trust the folder
 
 Claude Code asks whether you trust the files in this folder before it will work here.
-Your workspace is yours, so choose :graded[Yes, proceed].
+Your workspace is yours, so choose :graded[Yes, I trust this folder].
 
 :::note[Why Claude Code asks this]
 Claude reads project files to understand your code. The trust prompt is your chance to
