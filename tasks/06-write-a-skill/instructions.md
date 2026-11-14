@@ -64,15 +64,32 @@ Personal skills in `~/.claude/skills/` follow you from project to project instea
 
 ## 4 · Let Claude pick the skill itself
 
-The commit you just made isn't in the changelog yet. This time don't type the
-command. Ask in plain words:
+The commit you just made isn't in the changelog yet. This time Claude has to find
+the skill without your help.
 
-```
-Bring the changelog up to date and commit it.
-```
+- **a. Start a fresh conversation.** Run:
 
-Watch Claude reach for the skill on its own, then check that :graded[CHANGELOG.md]
-gained an entry for the commit from step 3.
+  ```
+  /clear
+  ```
+
+  Exiting with `/exit` and running `claude` again works too.
+
+- **b. Ask in plain words.** Don't type the command:
+
+  ```
+  Bring the changelog up to date and commit it.
+  ```
+
+- **c. Check the result.** Watch Claude reach for the skill on its own, then check
+  that :graded[CHANGELOG.md] gained an entry for the commit from step 3.
+
+:::tip[Why start fresh]
+Running `/changelog` in step 2 put the whole skill into the conversation. With the
+procedure already in front of it, Claude may just do the work by hand instead of
+using the skill. A fresh conversation holds only each skill's name and description,
+so Claude has to match your request against them.
+:::
 
 :::tip[The description does the matching]
 You never said "changelog skill", yet Claude used it. Before every reply, Claude
