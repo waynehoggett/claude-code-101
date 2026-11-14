@@ -78,10 +78,15 @@ Describe "A reusable skill" {
         if ($null -eq $repo) {
             throw "Your ledger project wasn't found in the workspace. Finish the earlier tasks first, then come back to this one."
         }
-        if (-not $autoInvoked) {
-            throw "Claude hasn't used the changelog skill on its own yet. Without typing /changelog, ask it in plain words to bring the changelog up to date, as in step 4."
-        }
         $content = Get-Content "$($repo.Path)/CHANGELOG.md" -Raw -ErrorAction SilentlyContinue
+        if (-not $autoInvoked) {
+            # The changelog already lists the skill commit, so Claude did the work by
+            # hand (#44). In the 21 Oct run-through this was why step 4 failed.
+            if ($content -match 'skill') {
+                throw "Claude updated the changelog by hand instead of using the changelog skill. Run /clear, or exit and start claude again, then ask in plain words to bring the changelog up to date and commit it."
+            }
+            throw "Claude hasn't used the changelog skill on its own yet. Run /clear, or exit and start claude again, then ask in plain words to bring the changelog up to date, as in step 4."
+        }
         if ($content -notmatch 'skill') {
             throw "CHANGELOG.md doesn't list the commit that added the skill yet. Ask Claude in plain words to bring the changelog up to date and commit it."
         }
