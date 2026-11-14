@@ -83,7 +83,10 @@ source of grading truth). The full platform contract lives in the platform repo 
   of the task: when a live run passes grading but looks different from solve.ps1, one
   of them is wrong.
 - Optional `sabotage.ps1` breaks the solved state in a way the grader must catch (a
-  failing test, for example). Optional `verify.psd1` lists `PassesBeforeStart` check
+  failing test, for example). Add more as `sabotage-<name>.ps1`; each runs on its own
+  freshly solved state. When a known way of going wrong needs a specific recovery
+  message, pin it in `verify.psd1` under `SabotageMessages` (script name, then check
+  name, then a pattern the failure message must match). Optional `verify.psd1` lists `PassesBeforeStart` check
   names that legitimately pass before the learner starts the task.
 - Run `./verify/Invoke-TaskVerification.ps1` before every push. It proves each grader
   fails on the starting state, passes on the solved state, notices sabotage, and throws

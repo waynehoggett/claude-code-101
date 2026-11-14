@@ -11,9 +11,12 @@
          verify.psd1 under PassesBeforeStart), and every failure message must be a
          plain learner-facing sentence.
       3. Run the task's own solve.ps1, then grade again. Every check must pass.
-      4. If the task ships sabotage.ps1, run it against the solved state and grade
-         once more. At least one check must fail, which proves the grader notices
-         broken work rather than just the presence of files.
+      4. For each sabotage script the task ships (sabotage.ps1, sabotage-*.ps1), run
+         it against a freshly solved state and grade once more. At least one check
+         must fail, which proves the grader notices broken work rather than just the
+         presence of files. verify.psd1 can also pin, under SabotageMessages, the
+         message a named check must fail with for a given script, so a learner who
+         goes wrong in that way is told how to recover.
     Exit code is 1 if anything above didn't hold.
 
 .EXAMPLE
@@ -123,8 +126,11 @@ foreach ($lang in $Language) {
         }
 
         $expectedEarly = @()
+        $expectedMessages = @{}
         if (Test-Path "$taskDir/verify.psd1") {
-            $expectedEarly = @((Import-PowerShellDataFile "$taskDir/verify.psd1").PassesBeforeStart)
+            $verifyData = Import-PowerShellDataFile "$taskDir/verify.psd1"
+            $expectedEarly = @($verifyData.PassesBeforeStart | Where-Object { $_ })
+            if ($verifyData.SabotageMessages) { $expectedMessages = $verifyData.SabotageMessages }
         }
 
         $spec = "$taskDir/test.tests.ps1"
@@ -134,17 +140,27 @@ foreach ($lang in $Language) {
         Invoke-Solve $taskDir $ws $claudeHome $lang
         $solved = @(Invoke-Grade $spec $ws $claudeHome "$label solved")
 
-        $sabotaged = $null
-        if (Test-Path "$taskDir/sabotage.ps1") {
-            $params = @{ Workspace = $ws; ClaudeHome = $claudeHome }
-            if ((Get-Command "$taskDir/sabotage.ps1").Parameters.ContainsKey('Language')) { $params.Language = $lang }
-            & "$taskDir/sabotage.ps1" @params
-            $sabotaged = @(Invoke-Grade $spec $ws $claudeHome "$label sabotaged")
+        # Each sabotage script gets its own freshly solved state, so scripts never
+        # see each other's damage. sabotage.ps1 first, then sabotage-*.ps1 by name.
+        $sabotageRuns = [ordered]@{}
+        $scripts = @(Get-ChildItem $taskDir -Filter 'sabotage*.ps1' | Sort-Object { $_.Name -ne 'sabotage.ps1' }, Name)
+        foreach ($script in $scripts) {
+            $sws = Join-Path $runRoot "$taskName-$lang-$($script.BaseName)/workspace"
+            $shome = Join-Path $runRoot "$taskName-$lang-$($script.BaseName)/claude-home"
+            New-Item -ItemType Directory -Path $sws, $shome -Force | Out-Null
+            foreach ($t in $allTasks[0..$index]) { Invoke-Solve "$root/tasks/$t" $sws $shome $lang }
+            $params = @{ Workspace = $sws; ClaudeHome = $shome }
+            if ((Get-Command $script.FullName).Parameters.ContainsKey('Language')) { $params.Language = $lang }
+            & $script.FullName @params
+            $sabotageRuns[$script.Name] = @(Invoke-Grade $spec $sws $shome "$label $($script.BaseName)")
+        }
+        foreach ($name in $expectedMessages.Keys) {
+            if (-not $sabotageRuns.Contains($name)) { $problems.Add("${label}: verify.psd1 names $name, which doesn't exist") }
         }
 
         $rows = foreach ($check in $fresh) {
             $after = $solved | Where-Object Name -eq $check.Name
-            $broken = if ($sabotaged) { $sabotaged | Where-Object Name -eq $check.Name } else { $null }
+            $broken = @(foreach ($run in $sabotageRuns.Values) { $run | Where-Object Name -eq $check.Name })
 
             $freshOk = if ($expectedEarly -contains $check.Name) { $check.Passed } else { -not $check.Passed }
             if (-not $freshOk) {
@@ -163,14 +179,31 @@ foreach ($lang in $Language) {
                 Check     = $check.Name
                 Fresh     = if ($check.Passed) { 'pass' } else { 'fail' }
                 Solved    = if ($after.Passed) { 'pass' } else { 'FAIL' }
-                Sabotaged = if ($null -eq $broken) { '' } elseif ($broken.Passed) { 'pass' } else { 'fail' }
+                Sabotaged = ($broken | ForEach-Object { if ($_.Passed) { 'pass' } else { 'fail' } }) -join ' '
                 Message   = $check.Message
             }
         }
         $rows | Format-Table -AutoSize -Wrap | Out-String -Width 200 | Write-Host
 
-        if ($sabotaged -and -not ($sabotaged | Where-Object { -not $_.Passed })) {
-            $problems.Add("${label}: sabotage.ps1 broke the work but every check still passed")
+        foreach ($name in $sabotageRuns.Keys) {
+            $run = $sabotageRuns[$name]
+            if (-not ($run | Where-Object { -not $_.Passed })) {
+                $problems.Add("${label}: $name broke the work but every check still passed")
+            }
+            foreach ($bad in $run | Where-Object { -not $_.Passed }) {
+                $lint = Test-MessageIsFriendly $bad.Message
+                if ($lint) { $problems.Add("${label} ${name}: '$($bad.Name)': $lint") }
+            }
+            if (-not $expectedMessages.Contains($name)) { continue }
+            foreach ($checkName in $expectedMessages[$name].Keys) {
+                $pattern = $expectedMessages[$name][$checkName]
+                $got = $run | Where-Object Name -eq $checkName
+                if (-not $got) { $problems.Add("${label} ${name}: no check named '$checkName'") }
+                elseif ($got.Passed) { $problems.Add("${label} ${name}: '$checkName' passed but should fail") }
+                elseif ($got.Message -notmatch $pattern) {
+                    $problems.Add("${label} ${name}: '$checkName' failed with the wrong message (wanted /$pattern/): $($got.Message)")
+                }
+            }
         }
     }
 }
