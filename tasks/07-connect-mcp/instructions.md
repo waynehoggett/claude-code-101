@@ -14,8 +14,13 @@ project and use it.
   claude mcp add --transport http --scope project context7 https://mcp.context7.com/mcp
   ```
 
-- **b. Approve it.** Start Claude Code and choose to use the project's MCP server
-  when asked.
+- **b. Approve it.** Start Claude Code and choose **Use this MCP server** when asked.
+
+:::warning[Enter skips the server]
+The approval prompt starts with **Continue without using this MCP server**
+highlighted, so pressing Enter straight away leaves Context7 disconnected. If that
+happened, run `/mcp`, select context7 and enable it.
+:::
 
 :::tip[HTTP or stdio]
 Context7 is an HTTP server: it runs on someone else's machine and Claude Code talks
