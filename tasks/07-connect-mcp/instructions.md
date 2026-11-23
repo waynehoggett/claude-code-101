@@ -18,8 +18,9 @@ project and use it.
 
 :::warning[Enter skips the server]
 The approval prompt starts with **Continue without using this MCP server**
-highlighted, so pressing Enter straight away leaves Context7 disconnected. If that
-happened, run `/mcp`, select context7 and enable it.
+highlighted, so pressing Enter straight away rejects Context7. If that happened,
+exit Claude Code, run `claude mcp reset-project-choices` in the project directory,
+then start Claude Code again and choose **Use this MCP server**.
 :::
 
 :::tip[HTTP or stdio]
